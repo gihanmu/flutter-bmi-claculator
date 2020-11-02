@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/calculator_brain.dart';
 import 'package:bmi_calculator/constants.dart';
 import 'package:bmi_calculator/icon_content.dart';
 import 'package:bmi_calculator/reusable_card.dart';
@@ -197,13 +198,40 @@ class _InputPageState extends State<InputPage> {
                 ],
               ),
             ),
-            Container(
-              height: kBottomContainerHeight,
-              width: double.infinity,
-              margin: EdgeInsets.only(top: 10.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: kBottomContainerColor,
+            GestureDetector(
+              onTap: () {
+                CalculatorBrain brain =
+                    CalculatorBrain(height: height, weight: weight);
+                String bmi = brain.calculateBMI();
+                String result = brain.getResult();
+                String interpretation = brain.getInterpretation();
+                Navigator.pushNamed(
+                  context,
+                  '/results',
+                  arguments: {
+                    'bmi': bmi,
+                    'result': result,
+                    'interpretation': interpretation
+                  },
+                );
+              },
+              child: Container(
+                height: kBottomContainerHeight,
+                width: double.infinity,
+                margin: EdgeInsets.only(top: 10.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: kBottomContainerColor,
+                ),
+                child: Center(
+                  child: Text(
+                    'CALCULATE',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.w900),
+                  ),
+                ),
               ),
             )
           ],
